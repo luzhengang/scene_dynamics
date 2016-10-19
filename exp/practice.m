@@ -71,8 +71,8 @@ try
     end
     while trial <= totalNum
         % Prep Fixation
-        %Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
-        %Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
+        Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
+        Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
         if conditions(trial,3) == 1 && conditions(trial,4)==1 && ...
                 conditions(trial, 6) == 1 && conditions(trial, 5) == 1
             Screen('PutImage', window, nat_ope_1, loc);
@@ -145,10 +145,10 @@ try
         Soatime=conditions(trial,2); % in unit of number of frames
         
         % Prep Fixation
-        %Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
-        %Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
+        Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
+        Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
         %Screen('PutImage', window, pnoise1, loc(1,:));
-        %Screen('DrawingFinished', window);
+        Screen('DrawingFinished', window);
         
         %vbl = Screen('Flip', window, starttime1 + 6*ifi - 0.5*ifi); % noise mask onset
         %Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
@@ -192,12 +192,12 @@ try
         starttime2 = Screen('Flip', window, offtime1 + (Soatime - 0.5)*ifi);
         
         % Prep Fixation
-        %Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
-        %Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
+        Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
+        Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
         %if conditions(trial,4) == 1 && conditions(trial,5)==1 % 4 is first face(1)/house(2); 5 is left/right
         %Screen('PutImage', window, pnoise1, loc);
         %Screen('PutImage', window, pnoise1, loc(2,:));
-        %Screen('DrawingFinished', window);
+        Screen('DrawingFinished', window);
         
         if ~DEBUG
             while 1
