@@ -72,44 +72,43 @@ try
     end
     while trial <= totalNum
         % Prep Fixation
-        %Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
-        %Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
+        
         if conditions(trial,3) == 1 && conditions(trial,4)==1 && ...
                 conditions(trial, 6) == 1 && conditions(trial, 5) == 1
             Screen('PutImage', window, nat_ope_1, loc);
-            Screen('DrawingFinished', window);
+            %Screen('DrawingFinished', window);
         elseif conditions(trial,3) == 1 && conditions(trial,4)==1 && ...
                 conditions(trial, 6) == 2 && conditions(trial, 5) == 1
             Screen('PutImage', window, nat_ope_2, loc);
-            Screen('DrawingFinished', window);
+            %Screen('DrawingFinished', window);
         elseif conditions(trial,3) == 1 && conditions(trial,4)==2 && ...
                 conditions(trial, 6) == 1 && conditions(trial, 5) == 1
             Screen('PutImage', window, nat_clo_1, loc);
-            Screen('DrawingFinished', window);
+            %Screen('DrawingFinished', window);
         elseif conditions(trial,3) == 1 && conditions(trial,4)==2 && ...
                 conditions(trial, 6) == 2 && conditions(trial, 5) == 1
             Screen('PutImage', window, nat_clo_2, loc);
-            Screen('DrawingFinished', window);
+            %Screen('DrawingFinished', window);
         elseif conditions(trial,3) == 2 && conditions(trial,4)==1 && ...
                 conditions(trial, 6) == 1 && conditions(trial, 5) == 1
             Screen('PutImage', window, urb_ope_1, loc);
-            Screen('DrawingFinished', window);
+            %Screen('DrawingFinished', window);
         elseif conditions(trial,3) == 2 && conditions(trial,4)==1 && ...
                 conditions(trial, 6) == 2 && conditions(trial, 5) == 1
             Screen('PutImage', window, urb_ope_2, loc);
-            Screen('DrawingFinished', window);
+            %Screen('DrawingFinished', window);
         elseif conditions(trial,3) == 2 && conditions(trial,4)==2 && ...
                 conditions(trial, 6) == 1 && conditions(trial, 5) == 1
             Screen('PutImage', window, urb_clo_1, loc);
-            Screen('DrawingFinished', window);
+            %Screen('DrawingFinished', window);
         elseif conditions(trial,3) == 2 && conditions(trial,4)==2 && ...
                 conditions(trial, 6) == 2 && conditions(trial, 5) == 1
             Screen('PutImage', window, urb_clo_2, loc);
-            Screen('DrawingFinished', window);
+            %Screen('DrawingFinished', window);
         elseif conditions(trial,3) == 1 && conditions(trial,4)==1 && ...
                 conditions(trial, 6) == 1 && conditions(trial, 5) == 2
             Screen('PutImage', window, urb_clo_2, loc);
-            Screen('DrawingFinished', window);
+            %Screen('DrawingFinished', window);
         elseif conditions(trial,3) == 1 && conditions(trial,4)==1 && ...
                 conditions(trial, 6) == 2 && conditions(trial, 5) == 2
             Screen('PutImage', window, urb_clo_1, loc);
@@ -117,43 +116,41 @@ try
         elseif conditions(trial,3) == 1 && conditions(trial,4)==2 && ...
                 conditions(trial, 6) == 1 && conditions(trial, 5) == 2
             Screen('PutImage', window, urb_ope_2, loc);
-            Screen('DrawingFinished', window);
+            %Screen('DrawingFinished', window);
         elseif conditions(trial,3) == 1 && conditions(trial,4)==2 && ...
                 conditions(trial, 6) == 2 && conditions(trial, 5) == 2
             Screen('PutImage', window, urb_ope_1, loc);
-            Screen('DrawingFinished', window);
+            %Screen('DrawingFinished', window);
         elseif conditions(trial,3) == 2 && conditions(trial,4)==1 && ...
                 conditions(trial, 6) == 1 && conditions(trial, 5) == 2
             Screen('PutImage', window, nat_clo_2, loc);
-            Screen('DrawingFinished', window);
+            %Screen('DrawingFinished', window);
         elseif conditions(trial,3) == 2 && conditions(trial,4)==1 && ...
                 conditions(trial, 6) == 2 && conditions(trial, 5) == 2
             Screen('PutImage', window, nat_clo_1, loc);
-            Screen('DrawingFinished', window);
+            %Screen('DrawingFinished', window);
         elseif conditions(trial,3) == 2 && conditions(trial,4)==2 && ...
                 conditions(trial, 6) == 1 && conditions(trial, 5) == 2
             Screen('PutImage', window, nat_ope_2, loc);
-            Screen('DrawingFinished', window);
+            %Screen('DrawingFinished', window);
         elseif conditions(trial,3) == 2 && conditions(trial,4)==2 && ...
                 conditions(trial, 6) == 2 && conditions(trial, 5) == 2
             Screen('PutImage', window, nat_ope_1, loc);
-            Screen('DrawingFinished', window);
+            %Screen('DrawingFinished', window);
         end
-        
+        Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
+        Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
+        Screen('DrawingFinished', window);
         starttime1 = Screen('Flip', window); % first stimulus onset. starttime1 is the time that the screen 'flipped'
         %starttime1 = GetSecs; % trial start time
         presentations (trial,1:7) = [conditions(trial,:), starttime1];
         Soatime=conditions(trial,2); % in unit of number of frames
         %Soatime = 2;
         % Prep Fixation
-        %Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
-        %Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
         Screen('PutImage', window, pnoise1, loc);
+        Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
+        Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
         Screen('DrawingFinished', window);
-        
-        %vbl = Screen('Flip', window, starttime1 + 6*ifi - 0.5*ifi); % noise mask onset
-        %Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
-        %Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
         offtime1 = Screen('Flip', window, starttime1 + (nFrameSti - 0.5)*ifi); % the first stimulus presented for 6 frames
         % Prep Fixation
         Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
@@ -190,14 +187,15 @@ try
         end
         
         % 2nd stimulus onset time, depending on the soa
+        Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
+        Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
         starttime2 = Screen('Flip', window, offtime1 + (Soatime - 0.5)*ifi);
         
         % Prep Fixation
-        %Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
-        %Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
         Screen('PutImage', window, pnoise1, loc);
+        Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
+        Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
         Screen('DrawingFinished', window);
-        
         if ~DEBUG
             while 1
                 while 1
@@ -239,9 +237,9 @@ try
         %Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
         % Hides image/shows fixation (between trial fixation)
         offtime2 = Screen('Flip', window, starttime2 + (nFrameSti-0.5)*ifi);
-        Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
-        Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
-        Screen('Flip', window, offtime1 + (2 - 0.5)*ifi);
+        Screen('DrawLine',window,green,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
+        Screen('DrawLine',window,green,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
+        Screen('Flip', window);
         if ~DEBUG
             while 1
                 while 1
@@ -282,6 +280,7 @@ try
         presentations (trial,8) = offtime1;
         presentations (trial,9) = starttime2;
         trial = trial+1;
+        
     end
      % Prep for last Fixation
     endtime1 = GetSecs; 
