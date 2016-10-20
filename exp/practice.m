@@ -16,10 +16,11 @@ try
     black=BlackIndex(screenNumber);
     gray=GrayIndex(screenNumber);
     white=WhiteIndex(screenNumber);
-    red=[0.5 0 0.5];
+    green = [0 255 0];
+    red = [255 0 0];
     %[window,screenRect]=Screen('OpenWindow',screenNumber,gray,[],8,2); % full SCREEN mode, in mid-level gray
     
-    [window,screenRect]=Screen('OpenWindow',0,gray);
+    [window,screenRect]=Screen('OpenWindow',0, gray);
     topPriorityLevel = MaxPriority(window);
     Priority(topPriorityLevel);
     ifi = Screen('GetFlipInterval', window); % an estimate of the monitor flip interval
@@ -71,8 +72,8 @@ try
     end
     while trial <= totalNum
         % Prep Fixation
-        Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
-        Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
+        %Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
+        %Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
         if conditions(trial,3) == 1 && conditions(trial,4)==1 && ...
                 conditions(trial, 6) == 1 && conditions(trial, 5) == 1
             Screen('PutImage', window, nat_ope_1, loc);
@@ -139,15 +140,15 @@ try
             Screen('DrawingFinished', window);
         end
         
-        starttime1 = Screen('Flip', window); % first stimulus onset. vbl is the time that the screen 'flipped'
+        starttime1 = Screen('Flip', window); % first stimulus onset. starttime1 is the time that the screen 'flipped'
         %starttime1 = GetSecs; % trial start time
         presentations (trial,1:7) = [conditions(trial,:), starttime1];
         Soatime=conditions(trial,2); % in unit of number of frames
-        
+        %Soatime = 2;
         % Prep Fixation
-        Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
-        Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
-        %Screen('PutImage', window, pnoise1, loc(1,:));
+        %Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
+        %Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
+        Screen('PutImage', window, pnoise1, loc);
         Screen('DrawingFinished', window);
         
         %vbl = Screen('Flip', window, starttime1 + 6*ifi - 0.5*ifi); % noise mask onset
@@ -155,9 +156,9 @@ try
         %Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
         offtime1 = Screen('Flip', window, starttime1 + (nFrameSti - 0.5)*ifi); % the first stimulus presented for 6 frames
         % Prep Fixation
-        %Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
-        %Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
-        
+        Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
+        Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
+        Screen('Flip', window, offtime1 + (2 - 0.5)*ifi);
         % 3 is conetent nat(1)/urb(2); 4 is layout open(1)/close(2); 6 is
         % examplar 1/2; 5 is repatition repeated(1) non-repeated(2)
         % 3 is conetent nat(1)/urb(2); 4 is layout open(1)/close(2); 6 is
@@ -192,11 +193,9 @@ try
         starttime2 = Screen('Flip', window, offtime1 + (Soatime - 0.5)*ifi);
         
         % Prep Fixation
-        Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
-        Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
-        %if conditions(trial,4) == 1 && conditions(trial,5)==1 % 4 is first face(1)/house(2); 5 is left/right
-        %Screen('PutImage', window, pnoise1, loc);
-        %Screen('PutImage', window, pnoise1, loc(2,:));
+        %Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
+        %Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
+        Screen('PutImage', window, pnoise1, loc);
         Screen('DrawingFinished', window);
         
         if ~DEBUG
@@ -236,10 +235,13 @@ try
             end
         end
         
-        Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
-        Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
+        %Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
+        %Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
         % Hides image/shows fixation (between trial fixation)
         offtime2 = Screen('Flip', window, starttime2 + (nFrameSti-0.5)*ifi);
+        Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
+        Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
+        Screen('Flip', window, offtime1 + (2 - 0.5)*ifi);
         if ~DEBUG
             while 1
                 while 1
