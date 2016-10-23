@@ -71,8 +71,9 @@ try
     while GetSecs - begintime < fixationtime % 4 s for the first fixation
     end
     while trial <= totalNum
-        % Prep Fixation
-        
+        % Pre the 1st stimulus
+        % 3 is conetent nat(1)/urb(2); 4 is layout open(1)/close(2); 6 is
+        % examplar 1/2; 5 is repatition repeated(1) non-repeated(2)
         if conditions(trial,3) == 1 && conditions(trial,4)==1 && ...
                 conditions(trial, 6) == 1 && conditions(trial, 5) == 1
             Screen('PutImage', window, nat_ope_1, loc);
@@ -141,105 +142,73 @@ try
         Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
         Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
         Screen('DrawingFinished', window);
+        %% trial starts
+        % 1st stimulus onset
         starttime1 = Screen('Flip', window); % first stimulus onset. starttime1 is the time that the screen 'flipped'
-        %starttime1 = GetSecs; % trial start time
+        % set up the time lag between the 1st and 2nd stimulus
         presentations (trial,1:7) = [conditions(trial,:), starttime1];
         Soatime=conditions(trial,2); % in unit of number of frames
         %Soatime = 2;
-        % Prep Fixation
+        % Prep the 1st noise mask
         Screen('PutImage', window, pnoise1, loc);
         Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
         Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
         Screen('DrawingFinished', window);
+        % 1st stimulus offset, noise onset
         offtime1 = Screen('Flip', window, starttime1 + (nFrameSti - 0.5)*ifi); % the first stimulus presented for 6 frames
-        % Prep Fixation
+        % 1st noise offset
         Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
         Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
         Screen('Flip', window, offtime1 + (2 - 0.5)*ifi);
-        % 3 is conetent nat(1)/urb(2); 4 is layout open(1)/close(2); 6 is
-        % examplar 1/2; 5 is repatition repeated(1) non-repeated(2)
+        % Prep the 2nd stimulus
+        
         % 3 is conetent nat(1)/urb(2); 4 is layout open(1)/close(2); 6 is
         % examplar 1/2
         if conditions(trial,3) == 1 && conditions(trial,4)==1 && conditions(trial, 6) == 1
             Screen('PutImage', window, nat_ope_1, loc);
-            Screen('DrawingFinished', window);
+            %Screen('DrawingFinished', window);
         elseif conditions(trial,3) == 1 && conditions(trial,4)==1 && conditions(trial, 6) == 2
             Screen('PutImage', window, nat_ope_2, loc);
-            Screen('DrawingFinished', window);
+            %Screen('DrawingFinished', window);
         elseif conditions(trial,3) == 1 && conditions(trial,4)==2 && conditions(trial, 6) == 1
             Screen('PutImage', window, nat_clo_1, loc);
-            Screen('DrawingFinished', window);
+            %Screen('DrawingFinished', window);
         elseif conditions(trial,3) == 1 && conditions(trial,4)==2 && conditions(trial, 6) == 2
             Screen('PutImage', window, nat_clo_2, loc);
-            Screen('DrawingFinished', window);
+            %Screen('DrawingFinished', window);
         elseif conditions(trial,3) == 2 && conditions(trial,4)==1 && conditions(trial, 6) == 1
             Screen('PutImage', window, urb_ope_1, loc);
-            Screen('DrawingFinished', window);
+            %Screen('DrawingFinished', window);
         elseif conditions(trial,3) == 2 && conditions(trial,4)==1 && conditions(trial, 6) == 2
             Screen('PutImage', window, urb_ope_2, loc);
-            Screen('DrawingFinished', window);
+            %Screen('DrawingFinished', window);
         elseif conditions(trial,3) == 2 && conditions(trial,4)==2 && conditions(trial, 6) == 1
             Screen('PutImage', window, urb_clo_1, loc);
-            Screen('DrawingFinished', window);
+            %Screen('DrawingFinished', window);
         elseif conditions(trial,3) == 2 && conditions(trial,4)==2 && conditions(trial, 6) == 2
             Screen('PutImage', window, urb_clo_2, loc);
-            Screen('DrawingFinished', window);
+            %Screen('DrawingFinished', window);
         end
         
-        % 2nd stimulus onset time, depending on the soa
         Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
         Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
+        Screen('DrawingFinished', window);
+        % 2nd stimulus onset
         starttime2 = Screen('Flip', window, offtime1 + (Soatime - 0.5)*ifi);
         
-        % Prep Fixation
+        % Prep the 2nd noise mask
         Screen('PutImage', window, pnoise1, loc);
         Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
         Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
         Screen('DrawingFinished', window);
-        if ~DEBUG
-            while 1
-                while 1
-                    pulse=IOPort('read',P4,0,1);
-                    if ~isempty(pulse) && (pulse ~= 53)
-                        botpress(trial,1)=pulse;
-                        timepress(trial,1)=GetSecs-starttime2;
-                        break
-                    end
-                    if GetSecs-starttime1>=6*ifi+Soatime*ifi+6*ifi % targettime seconds for the 2nd stimulus
-                        break
-                    end
-                end
-                if GetSecs-starttime1>=6*ifi+Soatime*ifi+6*ifi
-                    break
-                end
-            end
-        else
-            while 1
-                while 1
-                    [keyIsDown,secs,keyCode] = KbCheck;
-                    pulse = find(keyCode);
-                    if ~isempty(pulse) && (pulse ~= 53)
-                        botpress(trial,1)=pulse;
-                        timepress(trial,1)=GetSecs-starttime2;
-                        break
-                    end
-                    if GetSecs-starttime1>=6*ifi+Soatime*ifi+6*ifi
-                        break
-                    end
-                end
-                if GetSecs-starttime1>=6*ifi+Soatime*ifi+6*ifi
-                    break
-                end
-            end
-        end
         
-        %Screen('DrawLine',window,white,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
-        %Screen('DrawLine',window,white,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
-        % Hides image/shows fixation (between trial fixation)
+        % 2nd stimulus offset, noise onset
         offtime2 = Screen('Flip', window, starttime2 + (nFrameSti-0.5)*ifi);
         Screen('DrawLine',window,green,center(1)-fix,center(2),center(1)+fix,center(2),fix_w);
         Screen('DrawLine',window,green,center(1),center(2)-fix,center(1),center(2)+fix,fix_w);
         Screen('Flip', window);
+        
+        % record response
         if ~DEBUG
             while 1
                 while 1
@@ -267,16 +236,17 @@ try
                         timepress(trial,1)=GetSecs-starttime2;
                         break
                     end
-                    if GetSecs-starttime1>=fixationtime-0.5 % w
+                    if GetSecs-starttime1>=fixationtime % w
                         break
                     end
                 end
-                if GetSecs-starttime1>=fixationtime-0.5
+                if GetSecs-starttime1>=fixationtime
                     break
                 end
             end
         end
-        % End of current dynamic scan prep for next trial
+        %% trial ends
+        % Prep for next trial
         presentations (trial,8) = offtime1;
         presentations (trial,9) = starttime2;
         trial = trial+1;
@@ -299,8 +269,10 @@ try
 catch ME
     display(sprintf('Error in Experiment. Please get experimenter.'));
     Priority(0);
-    ShowCursor
+    ShowCursor;
     Screen('CloseAll');
 end
 ShowCursor
 Screen('CloseAll');
+X = ['This run is ', num2str(totalexptime), ' seconds.'];
+disp(X);
