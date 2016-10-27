@@ -1,0 +1,7 @@
+If you use PTB, try the following to listen to scaner.
+1. find out the serial port name by using findingSerialPort.m
+2. change the scaner box to a mode in which you listen to the port directly.
+   in this case, switch to "Presentation" mode
+3. change in the mainexp.m correspondingly in %% Prep Port
+4. change the BaudRate to 19200
+5. find out the number represents trigger by print the pluse in the command window
